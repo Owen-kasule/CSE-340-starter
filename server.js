@@ -22,7 +22,12 @@ app.set("layout", "./layouts/layout") // not at views root
 /* ***********************
  * Routes
  *************************/
-app.use(static)
+app.use(static);
+
+// Root route to render index.ejs with a title
+app.get('/', (req, res) => {
+  res.render('index', { title: 'Home' });
+});
 
 /* ***********************
  * Local Server Information
@@ -31,9 +36,6 @@ app.use(static)
 const port = process.env.PORT
 const host = process.env.HOST
 
-/* ***********************
- * Log statement to confirm server operation
- *************************/
 app.listen(port, () => {
   console.log(`app listening on ${host}:${port}`)
 })
