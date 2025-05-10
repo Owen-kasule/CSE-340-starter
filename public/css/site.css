@@ -1,7 +1,7 @@
 /* Update your :root variables for better contrast */
 :root {
-  --brand: #0285a8; /* Darkened from #03d6fc for better contrast with white text */
-  --brand-dark: #016785; /* Darkened from #029cc8 */
+  --brand: #007694; /* Darkened even more for AAA contrast with white text */
+  --brand-dark: #005e78; /* Darkened hover state */
   --dark: #0b0b0b;
   --light: #ffffff;
   --gray-100: #f8f9fa;
