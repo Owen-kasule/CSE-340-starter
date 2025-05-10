@@ -1,7 +1,7 @@
 /* Update your :root variables for better contrast */
 :root {
-  --brand: #007694; /* Darkened even more for AAA contrast with white text */
-  --brand-dark: #005e78; /* Darkened hover state */
+  --brand: #00607a; /* Darkened even more for AAA contrast with white text */
+  --brand-dark: #00506a; /* Darkened hover state */
   --dark: #0b0b0b;
   --light: #ffffff;
   --gray-100: #f8f9fa;
@@ -219,18 +219,20 @@ main {
 }
 
 .cta-button {
-  background-color: var(--brand); /* Using our darkened brand color */
+  background-color: var(--brand);
   color: var(--light);
   border: none;
   border-radius: var(--radius);
   padding: 0.9rem 2rem;
-  font-weight: 600;
+  font-weight: 700; /* Increased from 600 to 700 for better readability */
   font-size: 1rem;
   cursor: pointer;
   transition: var(--transition);
-  box-shadow: 0 2px 4px rgba(3, 214, 252, 0.3);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Adjusted shadow for better depth */
   letter-spacing: 0.5px;
   text-transform: uppercase;
+  /* Adding text shadow improves readability without changing color */
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 
 .cta-button:hover {
