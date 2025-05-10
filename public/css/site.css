@@ -1,6 +1,7 @@
+/* Update your :root variables for better contrast */
 :root {
-  --brand: #03d6fc;
-  --brand-dark: #029cc8;
+  --brand: #0285a8; /* Darkened from #03d6fc for better contrast with white text */
+  --brand-dark: #016785; /* Darkened from #029cc8 */
   --dark: #0b0b0b;
   --light: #ffffff;
   --gray-100: #f8f9fa;
@@ -8,6 +9,7 @@
   --gray-300: #dee2e6;
   --gray-500: #adb5bd;
   --gray-700: #495057;
+  --gray-900: #212529; /* Added for higher contrast text */
   --radius: .25rem;
   --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   --transition: all 0.3s ease;
@@ -26,7 +28,7 @@ body {
   display: flex;
   justify-content: center;
   padding: 0.5rem; /* Reduced padding from 1rem to 0.5rem */
-  color: var(--gray-700);
+  color: var(--gray-900); /* Darker base text color throughout the site */
   line-height: 1.6;
 }
 
@@ -107,6 +109,7 @@ nav {
   display: block;
   transition: var(--transition);
   position: relative;
+  /* Make sure the contrast is good when hovered/active */
 }
 
 /* Update the hover underline to be centered better */
@@ -129,7 +132,7 @@ nav {
 
 .navigation li a:hover,
 .navigation li a[aria-current="page"] {
-  color: var(--brand);
+  color: #48e7ff; /* Brighter, higher contrast on dark background */
 }
 
 /* Main content */
@@ -216,7 +219,7 @@ main {
 }
 
 .cta-button {
-  background-color: var(--brand);
+  background-color: var(--brand); /* Using our darkened brand color */
   color: var(--light);
   border: none;
   border-radius: var(--radius);
@@ -332,7 +335,7 @@ main {
 
 .reviews li::before {
   content: "★";
-  color: var(--brand);
+  color: #0285a8; /* Updated star color for better contrast */
   margin-right: 5px;
 }
 
@@ -342,7 +345,22 @@ footer {
   padding: 1rem;
   text-align: center;
   background-color: var(--gray-100);
-  color: var(--gray-700);
+  color: var(--gray-900);
+}
+
+/* Add this to your CSS for labels */
+.label {
+  color: var(--gray-900); /* Darker text */
+  background-color: var(--gray-100);
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius);
+}
+
+/* For any wider-tracked spans that had contrast issues */
+.tracking-wider {
+  color: var(--gray-900); /* Ensure dark enough text */
+  letter-spacing: 0.05em;
 }
 
 /* Media Queries for larger screens */
