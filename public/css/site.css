@@ -1,18 +1,9 @@
 /* Update your :root variables for better contrast */
 :root {
-  --brand: #00607a; /* Darkened even more for AAA contrast with white text */
-  --brand-dark: #00506a; /* Darkened hover state */
+  --brand: #03d6fc;
   --dark: #0b0b0b;
   --light: #ffffff;
-  --gray-100: #f8f9fa;
-  --gray-200: #e9ecef;
-  --gray-300: #dee2e6;
-  --gray-500: #adb5bd;
-  --gray-700: #495057;
-  --gray-900: #212529; /* Added for higher contrast text */
   --radius: .25rem;
-  --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  --transition: all 0.3s ease;
 }
 
 /* Base styles - Mobile First */
@@ -23,13 +14,11 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   background: url('/img/checker-bg.png') repeat;
   display: flex;
   justify-content: center;
-  padding: 0.5rem; /* Reduced padding from 1rem to 0.5rem */
-  color: var(--gray-900); /* Darker base text color throughout the site */
-  line-height: 1.6;
+  padding: 1rem;
 }
 
 .site-container {
@@ -38,7 +27,6 @@ body {
   border-radius: 0;
   width: 100%;
   overflow: hidden;
-  box-shadow: var(--shadow);
 }
 
 /* Header styles */
@@ -46,38 +34,27 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.25rem;
-  background-color: var(--gray-100);
-  border-bottom: 1px solid var(--gray-300);
+  padding: 1rem;
 }
 
 .site-header h1 {
-  font-size: 1.75rem;
-  font-weight: 600;
-  color: var(--dark);
-  letter-spacing: -0.5px;
+  font-size: 1.5rem;
 }
 
 .account-link {
-  font-size: 13px;
+  font-size: 12px;
   text-decoration: none;
-  color: var(--gray-700);
-  padding: 6px 12px;
-  border-radius: var(--radius);
-  transition: var(--transition);
-  border: 1px solid transparent;
+  color: var(--dark);
 }
 
 .account-link:hover {
-  color: var(--brand-dark);
-  background-color: var(--gray-200);
-  border-color: var(--gray-300);
+  color: var(--brand);
 }
 
 /* Navigation styles */
 nav {
   background-color: var(--dark);
-  padding: 0;
+  padding: 0.5rem;
 }
 
 .navigation {
@@ -85,124 +62,62 @@ nav {
   list-style: none;
   overflow-x: auto;
   white-space: nowrap;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  /* Add these properties for even spacing */
-  justify-content: space-evenly;
-  padding: 0;
-  width: 100%;
-}
-
-.navigation li {
-  flex: 1 1 auto;
-  text-align: center;
 }
 
 .navigation li a {
   color: var(--light);
   text-decoration: none;
   text-transform: uppercase;
-  font-size: 0.85rem;
-  letter-spacing: 0.5px;
-  font-weight: 500;
-  padding: 0.75rem 0.5rem;
+  padding: 0.5rem 1rem;
   display: block;
-  transition: var(--transition);
-  position: relative;
-  /* Make sure the contrast is good when hovered/active */
-}
-
-/* Update the hover underline to be centered better */
-.navigation li a::after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: 6px;
-  left: 50%;
-  background-color: var(--brand);
-  transition: var(--transition);
-  transform: translateX(-50%);
-}
-
-.navigation li a:hover::after,
-.navigation li a[aria-current="page"]::after {
-  width: 70%; /* Changed from calc(100% - 2rem) for better centering */
 }
 
 .navigation li a:hover,
 .navigation li a[aria-current="page"] {
-  color: #48e7ff; /* Brighter, higher contrast on dark background */
+  color: var(--brand);
 }
 
 /* Main content */
 main {
-  padding: 1.5rem;
+  padding: 1rem;
 }
 
 /* Hero section */
 .hero {
   display: flex;
   flex-direction: column;
-  margin-bottom: 3rem;
-  background-color: var(--gray-100);
-  border-radius: var(--radius);
-  overflow: hidden;
-  position: relative;
+  margin-bottom: 2rem;
 }
 
 .hero__info {
   order: 2;
-  padding: 1.5rem;
-  position: relative;
-  z-index: 2;
+  margin-top: 1rem;
 }
 
 .hero__image {
   order: 1;
   text-align: center;
-  background-color: var(--gray-200);
-  padding: 1.5rem 0;
-  position: relative;
-  overflow: hidden;
-}
-
-.hero__image::after {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: 0;
-  width: 100%;
-  height: 20px;
-  background: linear-gradient(to top, var(--gray-200), transparent);
-  z-index: 1;
 }
 
 .hero__image img {
   width: 90%;
   max-width: 400px;
   object-fit: contain;
-  transition: var(--transition);
 }
 
 .hero h2 {
-  margin-bottom: 0.75rem;
-  font-size: 1.75rem;
-  color: var(--dark);
-  font-weight: 600;
-  letter-spacing: -0.5px;
+  margin-bottom: 0.5rem;
 }
 
 .hero__features {
   list-style: none;
-  margin: 1.25rem 0;
+  margin: 1rem 0;
 }
 
 .hero__features li {
-  padding-left: 1.75rem;
-  margin-bottom: 0.75rem;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
   position: relative;
-  font-size: 1.05rem;
 }
 
 .hero__features li::before {
@@ -211,11 +126,10 @@ main {
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   background-color: var(--brand);
   border-radius: 50%;
-  box-shadow: 0 0 0 2px rgba(3, 214, 252, 0.2);
 }
 
 .cta-button {
@@ -223,54 +137,21 @@ main {
   color: var(--light);
   border: none;
   border-radius: var(--radius);
-  padding: 0.9rem 2rem;
-  font-weight: 700; /* Increased from 600 to 700 for better readability */
-  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: bold;
   cursor: pointer;
-  transition: var(--transition);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Adjusted shadow for better depth */
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  /* Adding text shadow improves readability without changing color */
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-}
-
-.cta-button:hover {
-  background-color: var(--brand-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(3, 214, 252, 0.4);
-}
-
-.cta-button:active {
-  transform: translateY(0);
-  box-shadow: 0 1px 2px rgba(3, 214, 252, 0.4);
+  transition: background-color 0.3s;
 }
 
 /* Content columns */
 .content-columns {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 2rem;
 }
 
 .content-columns h2 {
-  margin-bottom: 1.25rem;
-  font-size: 1.5rem;
-  color: var(--dark);
-  font-weight: 600;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid var(--gray-300);
-  position: relative;
-}
-
-.content-columns h2::after {
-  content: "";
-  position: absolute;
-  width: 60px;
-  height: 2px;
-  bottom: -2px;
-  left: 0;
-  background-color: var(--brand);
+  margin-bottom: 1rem;
 }
 
 /* Upgrades section */
@@ -286,83 +167,29 @@ main {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 1.25rem;
-  border-radius: var(--radius);
-  border: 1px solid var(--gray-300);
-  background-color: var(--gray-100);
-  width: 100%;
-  transition: var(--transition);
-}
-
-.upgrade-item:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow);
-  border-color: var(--brand);
 }
 
 .upgrade-item img {
   width: 96px;
   height: 96px;
   object-fit: contain;
-  margin-bottom: 0.75rem;
-  transition: var(--transition);
-}
-
-.upgrade-item:hover img {
-  transform: scale(1.05);
-}
-
-.upgrade-item p {
-  font-weight: 500;
-  color: var(--dark);
+  margin-bottom: 0.5rem;
 }
 
 /* Reviews section */
-.reviews {
-  background-color: var(--gray-100);
-  padding: 1.5rem;
-  border-radius: var(--radius);
-  border-left: 3px solid var(--brand);
-}
-
 .reviews ul {
   margin-left: 1.5rem;
 }
 
 .reviews li {
-  margin-bottom: 0.75rem;
-  position: relative;
-  padding: 0.5rem 0;
-}
-
-.reviews li::before {
-  content: "★";
-  color: #0285a8; /* Updated star color for better contrast */
-  margin-right: 5px;
+  margin-bottom: 0.5rem;
 }
 
 /* Footer styles */
 footer {
   border-top: 2px solid var(--brand);
-  padding: 1rem;
+  padding: 0.5rem;
   text-align: center;
-  background-color: var(--gray-100);
-  color: var(--gray-900);
-}
-
-/* Add this to your CSS for labels */
-.label {
-  color: var(--gray-900); /* Darker text */
-  background-color: var(--gray-100);
-  padding: 0.25rem 0.5rem;
-  border: 1px solid var(--gray-300);
-  border-radius: var(--radius);
-}
-
-/* For any wider-tracked spans that had contrast issues */
-.tracking-wider {
-  color: var(--gray-900); /* Ensure dark enough text */
-  letter-spacing: 0.05em;
 }
 
 /* Media Queries for larger screens */
@@ -373,7 +200,7 @@ footer {
   
   .content-columns {
     flex-direction: row;
-    gap: 2.5rem;
+    gap: 2rem;
   }
   
   .upgrades, .reviews {
@@ -383,81 +210,37 @@ footer {
   .upgrades__grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
   }
 }
 
 @media screen and (min-width: 896px) {
   .site-container {
-    max-width: 1100px; /* Increased from 900px to 1100px */
+    max-width: 900px;
   }
   
   .hero {
     flex-direction: row;
     align-items: center;
-    min-height: 320px;
   }
   
   .hero__info {
     order: 1;
-    flex: 35%; /* Adjusted from 40% to 35% */
-    padding: 2.5rem;
+    flex: 35%;
+    padding-right: 1rem;
   }
   
   .hero__image {
     order: 2;
-    flex: 65%; /* Adjusted from 60% to 65% */
-    padding: 0;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .hero__image::after {
-    display: none;
+    flex: 65%;
   }
   
   .hero__image img {
-    width: 95%;
+    width: 100%;
     max-width: none;
-    max-height: 300px;
   }
   
   .navigation {
-    justify-content: center;
-    overflow-x: visible; /* No scrolling needed on larger screens */
-  }
-  
-  .navigation li {
-    flex: 0 1 auto;
-    min-width: 100px;
-  }
-  
-  .navigation li a {
-    padding: 0.75rem 1.5rem; /* More padding on larger screens */
-  }
-  
-  .upgrade-item {
-    padding: 1.5rem;
-  }
-}
-
-@media screen and (min-width: 1200px) { /* Added new breakpoint for very large screens */
-  .site-container {
-    max-width: 1300px;
-  }
-  
-  main {
-    padding: 2rem;
-  }
-  
-  .upgrades__grid {
-    grid-template-columns: repeat(3, 1fr); /* Show 3 columns for upgrades instead of 2 */
-  }
-  
-  .hero__image img {
-    max-height: 350px; /* Larger hero image */
+    justify-content: flex-start;
   }
 }
 
