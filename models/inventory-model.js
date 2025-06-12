@@ -1,4 +1,4 @@
-const pool = require('../database/your-pg-pool'); // Update with your actual pool file
+const pool = require('../database/pool');
 
 async function getVehicleById(inv_id) {
   const sql = `
