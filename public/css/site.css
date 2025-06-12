@@ -352,23 +352,70 @@ footer {
 .vehicle-detail {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 2rem;
   margin: 2rem 0;
 }
-.vehicle-img {
-  flex: 1 1 300px;
-  max-width: 500px;
-  width: 100%;
-  height: auto;
-}
-.vehicle-info {
+.detail-gallery {
   flex: 1 1 300px;
 }
-.price {
-  font-size: 2rem;
-  color: #2a9d8f;
+.main-img {
+  width: 100%; border-radius: 8px;
 }
-@media (max-width: 768px) {
+.thumbs {
+  display: flex; gap: 0.5rem; margin-top: 0.5rem;
+}
+.thumbs .thumb {
+  width: 60px; height: 40px; object-fit: cover; cursor: pointer;
+  border: 2px solid transparent; border-radius: 4px;
+}
+.thumbs .thumb:hover {
+  border-color: #2a9d8f;
+}
+
+.detail-info {
+  flex: 1 1 350px;
+}
+.detail-info h2 {
+  margin-bottom: 1rem; font-size: 1.8rem;
+}
+.strip {
+  display: flex; background: #f1f5f8; padding: 1rem; border-radius: 8px;
+  margin-bottom: 1rem;
+}
+.strip-item {
+  flex: 1; text-align: center;
+}
+.stripe-right {
+  border-left: 1px solid #ccc;
+}
+.strip .label {
+  display: block; font-size: 0.9rem; color: #555;
+}
+.strip .value {
+  font-size: 1.4rem; color: #2a9d8f; font-weight: bold;
+}
+
+.spec-list {
+  list-style: none; padding: 0; margin: 1rem 0;
+}
+.spec-list li {
+  margin-bottom: 0.5rem;
+}
+
+.actions {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+}
+.btn {
+  padding: 0.75rem 1.5rem; border-radius: 4px; border: none;
+  font-size: 1rem; cursor: pointer;
+}
+.btn.primary {
+  background-color: #2a9d8f; color: #fff;
+}
+.btn.outline {
+  background: #fff; color: #2a9d8f; border: 2px solid #2a9d8f;
+}
+@media (max-width: 900px) {
   .vehicle-detail {
     flex-direction: column;
   }
