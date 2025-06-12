@@ -1,9 +1,13 @@
 function formatNumberWithCommas(n) {
-  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  // Convert to number first, then format with commas
+  const num = Number(n);
+  return num.toLocaleString();
 }
 
 function toUSDollars(n) {
-  return '$' + formatNumberWithCommas(n.toFixed(0));
+  // Convert to number, round to 0 decimals, then format as USD
+  const num = Number(n);
+  return '$' + num.toLocaleString(undefined, { maximumFractionDigits: 0 });
 }
 
 function renderVehicleDetailHTML(v) {

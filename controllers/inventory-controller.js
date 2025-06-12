@@ -13,7 +13,7 @@ async function getVehicleDetail(req, res, next) {
     const detailHTML = renderVehicleDetailHTML(vehicle);
     res.render('inventory/detail', {
       title: `${vehicle.inv_make} ${vehicle.inv_model}`,
-      detailHTML
+      detailHTML, // ← this is critical!
     });
   } catch (err) {
     next(err);
