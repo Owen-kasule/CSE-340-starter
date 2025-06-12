@@ -1,3 +1,6 @@
+const miscRouter = require('./routes/misc');
+app.use(miscRouter);
+
 // 404 handler
 app.use((req, res, next) => {
   const err = new Error(`Not Found: ${req.originalUrl}`);
