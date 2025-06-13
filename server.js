@@ -28,10 +28,9 @@ app.set("layout", "./layouts/layout");
  *************************/
 app.use(async (req, res, next) => {
   try {
-    // Fetch all classification records once per request
     const classifications = await classificationModel.getClassifications();
-    // Make available to every EJS view as `classifications`
     res.locals.classifications = classifications;
+    res.locals.active = ''; // <-- Add here
     next();
   } catch (err) {
     next(err);
