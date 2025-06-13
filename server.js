@@ -13,6 +13,7 @@ const static = require("./routes/static");
 const inventoryRouter = require('./routes/inventory');
 const miscRouter = require('./routes/misc');
 require('./database/pool');
+const classificationModel = require('./models/classification-model');
 
 /* ***********************
  * View Engine and Templates
@@ -20,6 +21,21 @@ require('./database/pool');
 app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.set("layout", "./layouts/layout");
+
+/* ***********************
+ * Middleware
+ *************************/
+app.use(async (req, res, next) => {
+  try {
+    // Fetch all classification records once per request
+    const classifications = await classificationModel.getClassifications();
+    // Make available to every EJS view as `classifications`
+    res.locals.classifications = classifications;
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
 
 /* ***********************
  * Routes
