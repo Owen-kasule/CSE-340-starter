@@ -28,4 +28,4 @@ UPDATE public.inventory
    SET inv_image     = REPLACE(inv_image,     '/images/', '/images/vehicles/'),
        inv_thumbnail = REPLACE(inv_thumbnail, '/images/', '/images/vehicles/');
 
-       SELECT * FROM public.account WHERE account_email = 'tony@starkent.com';
+      
