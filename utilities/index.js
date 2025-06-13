@@ -10,11 +10,13 @@ function toUSDollars(n) {
 function renderVehicleDetailHTML(v) {
   // Build thumbnail gallery array
   const thumbs = v.inv_thumbnail
-    ? v.inv_thumbnail.split(',').map(fn => `/img/vehicles/${fn.trim()}`)
+    ? v.inv_thumbnail.split(',').map(fn =>
+        fn.trim().startsWith('/') ? fn.trim() : `/img/vehicles/${fn.trim()}`
+      )
     : [];
 
   // Main image path
-  const mainImg = `/img/vehicles/${v.inv_image}`;
+  const mainImg = v.inv_image.startsWith('/') ? v.inv_image : `/img/vehicles/${v.inv_image}`;
 
   return `
   <div class="vehicle-detail">
