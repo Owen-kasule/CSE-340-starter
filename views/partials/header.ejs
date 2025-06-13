@@ -1,21 +1,21 @@
-<header>
-    <div class="site-header">
-        <h1>CSE Motors</h1>
-        <a href="/account" class="account-link">My Account</a>
-    </div>
-    <nav class="main-nav">
-      <ul>
-        <li class="<%= active === 'home' ? 'active' : '' %>">
-          <a href="/">Home</a>
-        </li>
-        <% classifications.forEach(c => { 
-             const key = c.classification_name.toLowerCase(); %>
-          <li class="<%= active === key ? 'active' : '' %>">
-            <a href="/classification/<%= key %>">
-              <%= c.classification_name %>
-            </a>
-          </li>
-        <% }) %>
-      </ul>
-    </nav>
+<header class="site-header">
+  <h1>
+    <a href="/" style="text-decoration:none; color:inherit;">CSE Motors</a>
+  </h1>
+  <a href="#" class="account-link">My Account</a>
 </header>
+<nav>
+  <ul class="navigation">
+    <li class="<%= active === 'home' ? 'active' : '' %>">
+      <a href="/" <%= active === 'home' ? 'aria-current="page"' : '' %>>Home</a>
+    </li>
+    <% classifications.forEach(c => { 
+         const key = c.classification_name.toLowerCase(); %>
+      <li class="<%= active === key ? 'active' : '' %>">
+        <a href="/classification/<%= key %>" <%= active === key ? 'aria-current="page"' : '' %>>
+          <%= c.classification_name %>
+        </a>
+      </li>
+    <% }) %>
+  </ul>
+</nav>

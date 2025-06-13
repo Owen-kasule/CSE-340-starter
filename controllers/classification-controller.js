@@ -1,4 +1,5 @@
 const inventoryModel = require('../models/inventory-model');
+const { toUSDollars } = require('../utilities');
 
 async function getByClassification(req, res, next) {
   try {
@@ -8,6 +9,7 @@ async function getByClassification(req, res, next) {
     res.render('classification/list', {
       title: `${name} vehicles`,
       vehicles,
+      toUSDollars
     });
   } catch (err) {
     next(err);

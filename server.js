@@ -38,6 +38,11 @@ app.use(async (req, res, next) => {
 });
 
 /* ***********************
+ * Static Files
+ *************************/
+app.use(express.static('public'));
+
+/* ***********************
  * Routes
  *************************/
 app.use(static);
