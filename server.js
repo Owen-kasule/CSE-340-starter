@@ -14,6 +14,7 @@ const inventoryRouter = require('./routes/inventory');
 const miscRouter = require('./routes/misc');
 require('./database/pool');
 const classificationModel = require('./models/classification-model');
+const classificationRouter = require('./routes/classification');
 
 /* ***********************
  * View Engine and Templates
@@ -48,8 +49,12 @@ app.use('/inventory', inventoryRouter);
 // Misc routes
 app.use(miscRouter);
 
+// Classification routes
+app.use('/classification', classificationRouter);
+
 // Root route to render index.ejs with a title
 app.get('/', (req, res) => {
+  res.locals.active = 'home';
   res.render('index', { title: 'Home' });
 });
 

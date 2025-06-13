@@ -3,5 +3,19 @@
         <h1>CSE Motors</h1>
         <a href="/account" class="account-link">My Account</a>
     </div>
-    <%- include('./navigation') %>
+    <nav class="main-nav">
+      <ul>
+        <li class="<%= active === 'home' ? 'active' : '' %>">
+          <a href="/">Home</a>
+        </li>
+        <% classifications.forEach(c => { 
+             const key = c.classification_name.toLowerCase(); %>
+          <li class="<%= active === key ? 'active' : '' %>">
+            <a href="/classification/<%= key %>">
+              <%= c.classification_name %>
+            </a>
+          </li>
+        <% }) %>
+      </ul>
+    </nav>
 </header>
