@@ -6,12 +6,12 @@
 </header>
 <nav>
   <ul class="navigation">
-    <li class="<%= active === 'home' ? 'active' : '' %>">
+    <li>
       <a href="/" <%= active === 'home' ? 'aria-current="page"' : '' %>>Home</a>
     </li>
     <% classifications.forEach(c => { 
          const key = c.classification_name.toLowerCase(); %>
-      <li class="<%= active === key ? 'active' : '' %>">
+      <li>
         <a href="/classification/<%= key %>" <%= active === key ? 'aria-current="page"' : '' %>>
           <%= c.classification_name %>
         </a>
