@@ -30,6 +30,21 @@ exports.insertClassification = async (classification_name) => {
   return pool.query(sql, [classification_name]);
 };
 
+exports.insertInventory = async (vehicle) => {
+  const sql = `
+    INSERT INTO public.inventory
+      (classification_id, inv_make, inv_model, inv_year, inv_description,
+       inv_image, inv_thumbnail, inv_price, inv_miles, inv_color)
+    VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
+  `;
+  const params = [
+    vehicle.classification_id, vehicle.inv_make, vehicle.inv_model, vehicle.inv_year,
+    vehicle.inv_description, vehicle.inv_image, vehicle.inv_thumbnail,
+    vehicle.inv_price, vehicle.inv_miles, vehicle.inv_color
+  ];
+  return pool.query(sql, params);
+};
+
 module.exports = {
   getVehicleById,
   getVehiclesByClassification,
