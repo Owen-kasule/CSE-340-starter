@@ -22,6 +22,14 @@ async function getVehiclesByClassification(classification_name) {
   return result.rows;
 }
 
+exports.insertClassification = async (classification_name) => {
+  const sql = `
+    INSERT INTO public.classification (classification_name)
+    VALUES ($1)
+  `;
+  return pool.query(sql, [classification_name]);
+};
+
 module.exports = {
   getVehicleById,
   getVehiclesByClassification,

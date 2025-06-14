@@ -1,5 +1,7 @@
 const { getVehicleById } = require('../models/inventory-model');
 const { renderVehicleDetailHTML } = require('../utilities');
+const validator = require('validator');
+const inventoryModel = require('../models/inventoryModel');
 
 async function getVehicleDetail(req, res, next) {
   try {
@@ -19,6 +21,40 @@ async function getVehicleDetail(req, res, next) {
     next(err);
   }
 }
+
+exports.addClassificationView = (req, res) => {
+  const message = req.flash('message');
+  res.render('inventory/add-classification', { message });
+};
+
+exports.addClassification = async (req, res) => {
+  let { classification_name } = req.body;
+  // Server-side validation
+  if (
+    !classification_name ||
+    !validator.isAlphanumeric(classification_name)
+  ) {
+    req.flash('message', 'Invalid classification name. Only letters and numbers allowed.');
+    return res.render('inventory/add-classification', { 
+      message: req.flash('message'),
+      classification_name
+    });
+  }
+  // Insert into DB
+  try {
+    const result = await inventoryModel.insertClassification(classification_name);
+    if (result.rowCount === 1) {
+      req.flash('message', 'Classification added successfully!');
+      res.redirect('/inv');
+    } else {
+      req.flash('message', 'Failed to add classification.');
+      res.render('inventory/add-classification', { message: req.flash('message'), classification_name });
+    }
+  } catch (err) {
+    req.flash('message', 'Server error.');
+    res.render('inventory/add-classification', { message: req.flash('message'), classification_name });
+  }
+};
 
 module.exports = {
   getVehicleDetail,
