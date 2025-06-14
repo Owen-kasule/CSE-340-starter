@@ -45,7 +45,13 @@ exports.insertInventory = async (vehicle) => {
   return pool.query(sql, params);
 };
 
+async function getClassifications() {
+  const sql = 'SELECT * FROM public.classification ORDER BY classification_name';
+  return pool.query(sql);
+}
+
 module.exports = {
   getVehicleById,
   getVehiclesByClassification,
+  getClassifications,
 };

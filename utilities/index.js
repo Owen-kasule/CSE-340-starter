@@ -66,9 +66,8 @@ function renderVehicleDetailHTML(v) {
   </div>`;
 }
 
-const invModel = require('../models/inventoryModel');
-
-exports.buildClassificationList = async function (classification_id = null) {
+async function buildClassificationList(classification_id = null) {
+  const invModel = require('../models/inventoryModel');
   let data = await invModel.getClassifications();
   let classificationList =
     '<select name="classification_id" id="classificationList" required>';
@@ -85,10 +84,12 @@ exports.buildClassificationList = async function (classification_id = null) {
   });
   classificationList += "</select>";
   return classificationList;
-};
+}
 
+// Export the function!
 module.exports = {
   formatNumberWithCommas,
   toUSDollars,
-  renderVehicleDetailHTML
+  renderVehicleDetailHTML,
+  buildClassificationList,
 };
