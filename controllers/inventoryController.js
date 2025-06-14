@@ -1,13 +1,12 @@
 const inventoryModel = require('../models/inventoryModel');
 const utilities = require('../utilities');
 const validator = require('validator');
+const { getVehicleById } = require('../models/inventoryModel');
+const { renderVehicleDetailHTML } = require('../utilities');
 
 // Management view
 exports.managementView = (req, res) => {
-  res.render('inventory/management', { 
-    message: req.flash('message'),
-    title: 'Inventory Management'
-  });
+  res.render('inventory/management', { title: 'Inventory Management', message: req.flash('message') });
 };
 
 // Add Classification view (GET)
@@ -22,8 +21,8 @@ exports.addClassificationView = (req, res) => {
 // Add Classification (POST)
 exports.addClassification = async (req, res) => {
   let { classification_name } = req.body;
-  if (!classification_name || !validator.isAlphanumeric(classification_name)) {
-    req.flash('message', 'Invalid classification name. Only letters and numbers allowed.');
+  if (!classification_name || !validator.isAlpha(classification_name)) {
+    req.flash('message', 'Invalid classification name. Only alphabetic characters allowed.');
     return res.render('inventory/add-classification', { 
       message: req.flash('message'),
       classification_name,
@@ -44,6 +43,7 @@ exports.addClassification = async (req, res) => {
       });
     }
   } catch (err) {
+    console.error('DB Insert Error:', err); // <-- Add this line
     req.flash('message', 'Server error.');
     res.render('inventory/add-classification', { 
       message: req.flash('message'), 
@@ -117,6 +117,7 @@ exports.addInventory = async (req, res) => {
       });
     }
   } catch (err) {
+    console.error('Add Inventory Error:', err); // <-- Add this line
     const classificationList = await utilities.buildClassificationList(classification_id);
     req.flash('message', 'Server error.');
     res.render('inventory/add-inventory', {
@@ -130,18 +131,21 @@ exports.addInventory = async (req, res) => {
 };
 
 // Vehicle detail view (example)
-exports.getVehicleDetail = async (req, res) => {
+exports.getVehicleDetail = async (req, res, next) => {
   try {
-    const vehicle = await inventoryModel.getVehicleById(req.params.id);
+    const invId = parseInt(req.params.inv_id, 10);
+    const vehicle = await getVehicleById(invId);
     if (!vehicle) {
-      return res.status(404).render('error', { message: 'Vehicle not found', title: 'Error' });
+      const err = new Error('Vehicle not found');
+      err.status = 404;
+      throw err;
     }
-    const vehicleDetailHTML = utilities.renderVehicleDetailHTML(vehicle);
+    const detailHTML = renderVehicleDetailHTML(vehicle);
     res.render('inventory/detail', {
-      title: `${vehicle.inv_make} ${vehicle.inv_model} Details`,
-      vehicleDetailHTML
+      title: `${vehicle.inv_make} ${vehicle.inv_model}`,
+      detailHTML,
     });
   } catch (err) {
-    res.status(500).render('error', { message: 'Server error', title: 'Error' });
+    next(err);
   }
 };

@@ -10,7 +10,7 @@ const expressLayouts = require("express-ejs-layouts");
 require("dotenv").config();
 const app = express();
 const static = require("./routes/static");
-const inventoryRouter = require('./routes/inventory');
+const inventoryRoutes = require('./routes/inventory');
 const miscRouter = require('./routes/misc');
 require('./database/pool');
 const classificationModel = require('./models/classification-model');
@@ -28,6 +28,9 @@ app.set("layout", "./layouts/layout");
 /* ***********************
  * Middleware
  *************************/
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 app.use(async (req, res, next) => {
   try {
     const classifications = await classificationModel.getClassifications();
@@ -57,7 +60,8 @@ app.use(express.static('public'));
 app.use(static);
 
 // Inventory routes
-app.use('/inv', inventoryRouter);
+app.use('/inv', inventoryRoutes);
+app.use('/inventory', inventoryRoutes); // for detail pages
 
 // Misc routes
 app.use(miscRouter);

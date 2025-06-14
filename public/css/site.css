@@ -579,3 +579,83 @@ footer {
   color: var(--dark);
   margin-top: 0.5rem;
 }
+
+/* Form container */
+.form-container {
+  background: #2196f3;
+  color: #fff;
+  padding: 2em 1.5em;
+  border-radius: 8px;
+  max-width: 400px;
+  margin: 2em auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Flash/error message */
+.flash-message {
+  background: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  margin-bottom: 1em;
+  font-size: 1em;
+}
+
+/* Form labels and inputs */
+.form-container label {
+  display: block;
+  margin-top: 1em;
+  font-weight: bold;
+  color: #fff;
+}
+
+.form-container input[type="text"],
+.form-container input[type="number"],
+.form-container textarea,
+.form-container select {
+  width: 100%;
+  padding: 0.5em;
+  margin-top: 0.3em;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  font-size: 1em;
+  color: #333;
+}
+
+.form-container textarea {
+  min-height: 60px;
+  resize: vertical;
+}
+
+.form-container button {
+  margin-top: 1.5em;
+  background: #fff;
+  color: #2196f3;
+  border: none;
+  padding: 0.7em 1.5em;
+  border-radius: 4px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.form-container button:hover {
+  background: #1976d2;
+  color: #fff;
+}
+
+/* Optional: Add a subtle box around the fieldset */
+.form-container fieldset {
+  border: 1px solid #fff;
+  border-radius: 6px;
+  padding: 1em;
+  margin-top: 1em;
+}
+
+.form-container legend {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #fff;
+}
