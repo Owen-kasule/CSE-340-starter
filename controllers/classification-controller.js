@@ -1,4 +1,4 @@
-const inventoryModel = require('../models/inventory-model');
+const inventoryModel = require('../models/inventoryModel');
 const { toUSDollars } = require('../utilities');
 
 async function getByClassification(req, res, next) {

@@ -15,6 +15,8 @@ const miscRouter = require('./routes/misc');
 require('./database/pool');
 const classificationModel = require('./models/classification-model');
 const classificationRouter = require('./routes/classification');
+const session = require('express-session');
+const flash = require('connect-flash');
 
 /* ***********************
  * View Engine and Templates
@@ -37,6 +39,13 @@ app.use(async (req, res, next) => {
   }
 });
 
+app.use(session({
+  secret: 'yourSecretKey', // use a strong secret in production!
+  resave: false,
+  saveUninitialized: true
+}));
+app.use(flash());
+
 /* ***********************
  * Static Files
  *************************/
@@ -48,7 +57,7 @@ app.use(express.static('public'));
 app.use(static);
 
 // Inventory routes
-app.use('/inventory', inventoryRouter);
+app.use('/inv', inventoryRouter);
 
 // Misc routes
 app.use(miscRouter);

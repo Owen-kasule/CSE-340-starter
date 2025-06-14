@@ -1,47 +1,35 @@
-const { getVehicleById } = require('../models/inventory-model');
-const { renderVehicleDetailHTML } = require('../utilities');
-const validator = require('validator');
 const inventoryModel = require('../models/inventoryModel');
 const utilities = require('../utilities');
+const validator = require('validator');
 
-async function getVehicleDetail(req, res, next) {
-  try {
-    const invId = parseInt(req.params.inv_id, 10);
-    const vehicle = await getVehicleById(invId);
-    if (!vehicle) {
-      const err = new Error('Vehicle not found');
-      err.status = 404;
-      throw err;
-    }
-    const detailHTML = renderVehicleDetailHTML(vehicle);
-    res.render('inventory/detail', {
-      title: `${vehicle.inv_make} ${vehicle.inv_model}`,
-      detailHTML, // ← this is critical!
-    });
-  } catch (err) {
-    next(err);
-  }
-}
-
-exports.addClassificationView = (req, res) => {
-  const message = req.flash('message');
-  res.render('inventory/add-classification', { message });
+// Management view
+exports.managementView = (req, res) => {
+  res.render('inventory/management', { 
+    message: req.flash('message'),
+    title: 'Inventory Management'
+  });
 };
 
+// Add Classification view (GET)
+exports.addClassificationView = (req, res) => {
+  res.render('inventory/add-classification', { 
+    message: req.flash('message'),
+    classification_name: '',
+    title: 'Add Classification'
+  });
+};
+
+// Add Classification (POST)
 exports.addClassification = async (req, res) => {
   let { classification_name } = req.body;
-  // Server-side validation
-  if (
-    !classification_name ||
-    !validator.isAlphanumeric(classification_name)
-  ) {
+  if (!classification_name || !validator.isAlphanumeric(classification_name)) {
     req.flash('message', 'Invalid classification name. Only letters and numbers allowed.');
     return res.render('inventory/add-classification', { 
       message: req.flash('message'),
-      classification_name
+      classification_name,
+      title: 'Add Classification'
     });
   }
-  // Insert into DB
   try {
     const result = await inventoryModel.insertClassification(classification_name);
     if (result.rowCount === 1) {
@@ -49,31 +37,42 @@ exports.addClassification = async (req, res) => {
       res.redirect('/inv');
     } else {
       req.flash('message', 'Failed to add classification.');
-      res.render('inventory/add-classification', { message: req.flash('message'), classification_name });
+      res.render('inventory/add-classification', { 
+        message: req.flash('message'), 
+        classification_name,
+        title: 'Add Classification'
+      });
     }
   } catch (err) {
     req.flash('message', 'Server error.');
-    res.render('inventory/add-classification', { message: req.flash('message'), classification_name });
+    res.render('inventory/add-classification', { 
+      message: req.flash('message'), 
+      classification_name,
+      title: 'Add Classification'
+    });
   }
 };
 
-exports.managementView = (req, res) => {
-  const message = req.flash('message');
-  res.render('inventory/management', { message });
-};
-
+// Add Inventory view (GET)
 exports.addInventoryView = async (req, res) => {
   const classificationList = await utilities.buildClassificationList();
-  res.render('inventory/add-inventory', { message: req.flash('message'), classificationList });
+  res.render('inventory/add-inventory', { 
+    message: req.flash('message'), 
+    classificationList,
+    title: 'Add Vehicle',
+    // Sticky fields
+    classification_id: '', inv_make: '', inv_model: '', inv_year: '', inv_description: '',
+    inv_image: '', inv_thumbnail: '', inv_price: '', inv_miles: '', inv_color: ''
+  });
 };
 
+// Add Inventory (POST)
 exports.addInventory = async (req, res) => {
   let {
     classification_id, inv_make, inv_model, inv_year, inv_description,
     inv_image, inv_thumbnail, inv_price, inv_miles, inv_color
   } = req.body;
 
-  // Server-side validation
   let errors = [];
   if (!classification_id) errors.push('Classification is required.');
   if (!inv_make) errors.push('Make is required.');
@@ -92,12 +91,12 @@ exports.addInventory = async (req, res) => {
     return res.render('inventory/add-inventory', {
       message: req.flash('message'),
       classificationList,
+      title: 'Add Vehicle',
       classification_id, inv_make, inv_model, inv_year, inv_description,
       inv_image, inv_thumbnail, inv_price, inv_miles, inv_color
     });
   }
 
-  // Insert into DB
   try {
     const result = await inventoryModel.insertInventory({
       classification_id, inv_make, inv_model, inv_year, inv_description,
@@ -112,6 +111,7 @@ exports.addInventory = async (req, res) => {
       res.render('inventory/add-inventory', {
         message: req.flash('message'),
         classificationList,
+        title: 'Add Vehicle',
         classification_id, inv_make, inv_model, inv_year, inv_description,
         inv_image, inv_thumbnail, inv_price, inv_miles, inv_color
       });
@@ -122,12 +122,26 @@ exports.addInventory = async (req, res) => {
     res.render('inventory/add-inventory', {
       message: req.flash('message'),
       classificationList,
+      title: 'Add Vehicle',
       classification_id, inv_make, inv_model, inv_year, inv_description,
       inv_image, inv_thumbnail, inv_price, inv_miles, inv_color
     });
   }
 };
 
-module.exports = {
-  getVehicleDetail,
+// Vehicle detail view (example)
+exports.getVehicleDetail = async (req, res) => {
+  try {
+    const vehicle = await inventoryModel.getVehicleById(req.params.id);
+    if (!vehicle) {
+      return res.status(404).render('error', { message: 'Vehicle not found', title: 'Error' });
+    }
+    const vehicleDetailHTML = utilities.renderVehicleDetailHTML(vehicle);
+    res.render('inventory/detail', {
+      title: `${vehicle.inv_make} ${vehicle.inv_model} Details`,
+      vehicleDetailHTML
+    });
+  } catch (err) {
+    res.status(500).render('error', { message: 'Server error', title: 'Error' });
+  }
 };
