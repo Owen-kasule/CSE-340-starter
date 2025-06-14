@@ -56,6 +56,11 @@ exports.addClassification = async (req, res) => {
   }
 };
 
+exports.managementView = (req, res) => {
+  const message = req.flash('message');
+  res.render('inventory/management', { message });
+};
+
 module.exports = {
   getVehicleDetail,
 };
