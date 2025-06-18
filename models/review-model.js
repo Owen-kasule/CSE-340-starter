@@ -1,4 +1,4 @@
-const pool = require("../database/")
+const pool = require("../database/pool")
 
 /* ***************************
  *  Add new review
