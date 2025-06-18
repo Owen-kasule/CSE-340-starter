@@ -1,20 +1,21 @@
-/* Update your :root variables for better contrast */
+/* Color palette */
 :root {
-  --brand: #00607a; /* Darkened even more for AAA contrast with white text */
-  --brand-dark: #00506a; /* Darkened hover state */
-  --dark: #0b0b0b;
-  --light: #ffffff;
-  --gray-100: #f8f9fa;
-  --gray-200: #e9ecef;
-  --gray-300: #dee2e6;
-  --gray-500: #adb5bd;
-  --gray-700: #495057;
-  --radius: .25rem;
-  --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  --transition: all 0.3s ease;
+  --brand: #3563eb;
+  --brand-light: #6191fe;
+  --brand-dark: #2954cf;
+  --white: #ffffff;
+  --light: #f8f9fa;
+  --gray-100: #e3e8ef;
+  --gray-200: #c7d5ea;
+  --gray-300: #9db6d4;
+  --gray-400: #6c8bb8;
+  --gray-500: #486698;
+  --gray-600: #2f3c4d;
+  --gray-700: #1a2632;
+  --gray-800: #0f1419;
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
-/* Base styles - Mobile First */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -23,7 +24,7 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: url('/img/checker-bg.png') repeat;
+  background: url('/img/checker-bg.jpeg') repeat;
   display: flex;
   justify-content: center;
   padding: 0.5rem; /* Reduced padding from 1rem to 0.5rem */
@@ -38,6 +39,7 @@ body {
   width: 100%;
   overflow: hidden;
   box-shadow: var(--shadow);
+  max-width: 1200px;
 }
 
 /* Header styles */
