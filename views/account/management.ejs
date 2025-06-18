@@ -1,3 +1,5 @@
+<% layout('layouts/layout') -%>
+
 <% if (flash.notice) { %>
   <p class="notice"><%= flash.notice %></p>
 <% } %>
@@ -17,11 +19,83 @@
 </div>
 
 <div class="account-actions">
-  <a href="/account/update/<%= accountData.account_id %>" class="btn">Update Account Information</a>
+  <h2>Account Management</h2>
+  <div class="action-grid">
+    <a href="/account/update/<%= accountData.account_id %>" class="btn btn-primary">Update Account Information</a>
+    <a href="/review/my-reviews" class="btn btn-secondary">My Reviews</a>
+  </div>
   
   <% if (accountData.account_type === 'Employee' || accountData.account_type === 'Admin') { %>
     <h2>Inventory Management</h2>
     <p>You have access to inventory management features.</p>
-    <a href="/inv" class="btn">Manage Inventory</a>
+    <div class="action-grid">
+      <a href="/inv" class="btn btn-primary">Manage Inventory</a>
+      <a href="/review/admin" class="btn btn-warning">Moderate Reviews</a>
+    </div>
   <% } %>
 </div>
+
+<style>
+.account-info {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  border-left: 4px solid #4a90e2;
+}
+
+.account-info p {
+  margin: 10px 0;
+  color: #333;
+}
+
+.account-actions h2 {
+  color: #333;
+  margin-bottom: 15px;
+  margin-top: 30px;
+}
+
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 20px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: #4a90e2;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #357abd;
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #545b62;
+}
+
+.btn-warning {
+  background: #ffc107;
+  color: #212529;
+}
+
+.btn-warning:hover {
+  background: #e0a800;
+}
+</style>
