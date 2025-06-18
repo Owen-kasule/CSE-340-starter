@@ -7,16 +7,19 @@
  *************************/
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
+const cookieParser = require("cookie-parser");
 require("dotenv").config();
 const app = express();
 const static = require("./routes/static");
 const inventoryRoutes = require('./routes/inventory');
 const miscRouter = require('./routes/misc');
+const accountRoutes = require('./routes/account');
 require('./database/pool');
 const classificationModel = require('./models/classification-model');
 const classificationRouter = require('./routes/classification');
 const session = require('express-session');
 const flash = require('connect-flash');
+const utilities = require('./utilities/');
 
 /* ***********************
  * View Engine and Templates
@@ -30,24 +33,31 @@ app.set("layout", "./layouts/layout");
  *************************/
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
+
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'yourSecretKey',
+  resave: false,
+  saveUninitialized: true,
+  name: 'sessionId',
+}));
+app.use(flash());
+
+// Add JWT token check to all routes
+app.use(utilities.checkJWTToken);
 
 app.use(async (req, res, next) => {
   try {
     const classifications = await classificationModel.getClassifications();
     res.locals.classifications = classifications;
-    res.locals.active = ''; // <-- Add here
+    res.locals.active = '';
+    // Make flash messages available to all views
+    res.locals.flash = req.flash();
     next();
   } catch (err) {
     next(err);
   }
 });
-
-app.use(session({
-  secret: 'yourSecretKey', // use a strong secret in production!
-  resave: false,
-  saveUninitialized: true
-}));
-app.use(flash());
 
 /* ***********************
  * Static Files
@@ -59,9 +69,12 @@ app.use(express.static('public'));
  *************************/
 app.use(static);
 
-// Inventory routes
+// Account routes
+app.use('/account', accountRoutes);
+
+// Inventory routes - add middleware to check for Employee/Admin access to management routes
 app.use('/inv', inventoryRoutes);
-app.use('/inventory', inventoryRoutes); // for detail pages
+app.use('/inventory', inventoryRoutes); // for detail pages (public access)
 
 // Misc routes
 app.use(miscRouter);
@@ -100,6 +113,9 @@ app.use((err, req, res, next) => {
 const port = process.env.PORT || 5500;
 const host = process.env.HOST || 'localhost';
 
+/* ***********************
+ * Log statement to confirm server operation
+ *************************/
 app.listen(port, () => {
   console.log(`app listening on ${host}:${port}`);
 });
