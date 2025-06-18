@@ -49,13 +49,17 @@ app.use(utilities.checkJWTToken);
 app.use(async (req, res, next) => {
   try {
     const classifications = await classificationModel.getClassifications();
-    res.locals.classifications = classifications;
+    res.locals.classifications = classifications; // classifications is already an array
     res.locals.active = '';
     // Make flash messages available to all views
     res.locals.flash = req.flash();
     next();
   } catch (err) {
-    next(err);
+    console.error("Error loading classifications:", err);
+    res.locals.classifications = []; // Set empty array on error
+    res.locals.active = '';
+    res.locals.flash = req.flash();
+    next();
   }
 });
 
@@ -72,7 +76,7 @@ app.use(static);
 // Account routes
 app.use('/account', accountRoutes);
 
-// Inventory routes - add middleware to check for Employee/Admin access to management routes
+// Inventory routes
 app.use('/inv', inventoryRoutes);
 app.use('/inventory', inventoryRoutes); // for detail pages (public access)
 

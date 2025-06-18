@@ -76,23 +76,31 @@ function renderVehicleDetailHTML(v) {
  * Constructs the nav HTML unordered list
  ************************** */
 async function getNav(){
-  let data = await classificationModel.getClassifications()
-  let list = "<ul>"
-  list += '<li><a href="/" title="Home page">Home</a></li>'
-  data.rows.forEach((row) => {
-    list += "<li>"
-    list +=
-      '<a href="/inv/type/' +
-      row.classification_id +
-      '" title="See our inventory of ' +
-      row.classification_name +
-      ' vehicles">' +
-      row.classification_name +
-      "</a>"
-    list += "</li>"
-  })
-  list += "</ul>"
-  return list
+  try {
+    let data = await classificationModel.getClassifications()
+    let list = "<ul>"
+    list += '<li><a href="/" title="Home page">Home</a></li>'
+    // Fix: data is already an array from classification model, not data.rows
+    if (data && Array.isArray(data)) {
+      data.forEach((row) => {
+        list += "<li>"
+        list +=
+          '<a href="/inv/type/' +
+          row.classification_id +
+          '" title="See our inventory of ' +
+          row.classification_name +
+          ' vehicles">' +
+          row.classification_name +
+          "</a>"
+        list += "</li>"
+      })
+    }
+    list += "</ul>"
+    return list
+  } catch (error) {
+    console.error("Error in getNav:", error)
+    return "<ul><li><a href='/'>Home</a></li></ul>"
+  }
 }
 
 /* **************************************
@@ -147,7 +155,7 @@ function checkJWTToken(req, res, next) {
     process.env.ACCESS_TOKEN_SECRET,
     function (err, accountData) {
      if (err) {
-      req.flash("Please log in")
+      req.flash("notice", "Please log in")
       res.clearCookie("jwt")
       return res.redirect("/account/login")
      }
