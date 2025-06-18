@@ -4,3 +4,196 @@
 *:after {
   box-sizing: border-box;
 }
+
+/* Account Forms Styling */
+.account-form {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.account-form fieldset {
+  border: 2px solid #333;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.account-form legend {
+  font-weight: bold;
+  font-size: 1.2em;
+  padding: 0 10px;
+  color: #333;
+}
+
+.account-form label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+  color: #333;
+}
+
+.account-form input[type="text"],
+.account-form input[type="email"],
+.account-form input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
+
+.account-form input[type="text"]:focus,
+.account-form input[type="email"]:focus,
+.account-form input[type="password"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.submit-btn {
+  background-color: #333;
+  color: white;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.submit-btn:hover {
+  background-color: #555;
+}
+
+.password-info {
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 5px;
+  font-style: italic;
+}
+
+.notice {
+  background-color: #ffebee;
+  border: 1px solid #f44336;
+  color: #d32f2f;
+  padding: 15px;
+  border-radius: 5px;
+  margin: 15px 0;
+  list-style: none;
+}
+
+.notice li {
+  margin: 5px 0;
+}
+
+/* Account Management */
+.account-info {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+  border: 1px solid #ddd;
+}
+
+.account-actions {
+  margin: 20px 0;
+}
+
+.btn {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  display: inline-block;
+  margin: 5px 10px 5px 0;
+  border: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+  color: white;
+  text-decoration: none;
+}
+
+/* Update Forms */
+.update-forms {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin: 20px 0;
+  max-width: 1200px;
+}
+
+.form-section {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.form-section h2 {
+  margin-top: 0;
+  color: #333;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .update-forms {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}
+
+/* Header Account Link Styling */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #333;
+}
+
+.site-header h1 {
+  margin: 0;
+}
+
+.site-header span {
+  margin-right: 15px;
+  font-weight: bold;
+  color: #333;
+}
+
+.account-link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 16px;
+  border: 2px solid #007bff;
+  border-radius: 5px;
+}
+
+.account-link:hover {
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .site-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .site-header span {
+    margin: 10px 0;
+  }
+}
