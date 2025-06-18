@@ -141,10 +141,19 @@ exports.getVehicleDetail = async (req, res, next) => {
       throw err;
     }
     
-    // Get reviews for this vehicle
-    const reviewModel = require('../models/review-model');
-    const reviews = await reviewModel.getReviewsByVehicleId(invId);
-    const reviewStats = await reviewModel.getVehicleReviewStats(invId);
+    // Initialize default values for reviews
+    let reviews = [];
+    let reviewStats = { total_reviews: 0, avg_rating: 0 };
+    
+    // Try to get reviews if the table exists
+    try {
+      const reviewModel = require('../models/review-model');
+      reviews = await reviewModel.getReviewsByVehicleId(invId);
+      reviewStats = await reviewModel.getVehicleReviewStats(invId);
+    } catch (reviewError) {
+      console.log("Reviews not available - table may not exist yet:", reviewError.message);
+      // Continue without reviews - they're optional
+    }
     
     const detailHTML = renderVehicleDetailHTML(vehicle);
     res.render('inventory/detail', {
