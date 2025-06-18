@@ -140,10 +140,19 @@ exports.getVehicleDetail = async (req, res, next) => {
       err.status = 404;
       throw err;
     }
+    
+    // Get reviews for this vehicle
+    const reviewModel = require('../models/review-model');
+    const reviews = await reviewModel.getReviewsByVehicleId(invId);
+    const reviewStats = await reviewModel.getVehicleReviewStats(invId);
+    
     const detailHTML = renderVehicleDetailHTML(vehicle);
     res.render('inventory/detail', {
       title: `${vehicle.inv_make} ${vehicle.inv_model}`,
       detailHTML,
+      vehicle,
+      reviews,
+      reviewStats,
     });
   } catch (err) {
     next(err);

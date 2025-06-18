@@ -14,6 +14,7 @@ const static = require("./routes/static");
 const inventoryRoutes = require('./routes/inventory');
 const miscRouter = require('./routes/misc');
 const accountRoutes = require('./routes/account');
+const reviewRoutes = require('./routes/review'); // Add review routes
 require('./database/pool');
 const classificationModel = require('./models/classification-model');
 const classificationRouter = require('./routes/classification');
@@ -79,6 +80,9 @@ app.use('/account', accountRoutes);
 // Inventory routes
 app.use('/inv', inventoryRoutes);
 app.use('/inventory', inventoryRoutes); // for detail pages (public access)
+
+// Review routes
+app.use('/review', reviewRoutes);
 
 // Misc routes
 app.use(miscRouter);
