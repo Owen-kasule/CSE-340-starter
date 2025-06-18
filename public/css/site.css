@@ -23,7 +23,8 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: url('/img/checker-bg.png') repeat;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   padding: 0.5rem; /* Reduced padding from 1rem to 0.5rem */
