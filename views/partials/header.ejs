@@ -2,12 +2,14 @@
   <h1>
     <a href="/" style="text-decoration:none; color:inherit;">CSE Motors</a>
   </h1>
-  <% if (locals.loggedin) { %>
-    <span>Welcome <%= accountData.account_firstname %></span>
-    <a href="/account/logout" class="account-link">Logout</a>
-  <% } else { %>
-    <a href="/account/login" class="account-link">My Account</a>
-  <% } %>
+  <div class="header-right">
+    <% if (locals.loggedin) { %>
+      <span class="welcome-text">Welcome <%= accountData.account_firstname %></span>
+      <a href="/account/logout" class="account-link">Logout</a>
+    <% } else { %>
+      <a href="/account/login" class="account-link">My Account</a>
+    <% } %>
+  </div>
 </header>
 <nav>
   <ul class="navigation">
@@ -17,7 +19,7 @@
     <% classifications.forEach(c => { 
          const key = c.classification_name.toLowerCase(); %>
       <li>
-        <a href="/classification/<%= key %>" <%= active === key ? 'aria-current="page"' : '' %>>
+        <a href="/classification/<%= key %>" <%= active === key ? 'class="active"' : '' %>>
           <%= c.classification_name %>
         </a>
       </li>
