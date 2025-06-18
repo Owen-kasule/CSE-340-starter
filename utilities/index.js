@@ -1,3 +1,7 @@
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
+const classificationModel = require('../models/classification-model')
+
 function formatNumberWithCommas(n) {
   const num = Number(n);
   return num.toLocaleString();
@@ -48,48 +52,146 @@ function renderVehicleDetailHTML(v) {
       <ul class="spec-list">
         <li><strong>Color:</strong> ${v.inv_color}</li>
         <li><strong>Fuel Type:</strong> ${v.inv_fuel}</li>
-        <li><strong>Drivetrain:</strong> ${v.inv_drivetrain}</li>
-        <li><strong>Transmission:</strong> ${v.inv_transmission}</li>
-        <li><strong>Stock #:</strong> ${v.inv_stock}</li>
-        <li><strong>VIN:</strong> ${v.inv_vin}</li>
-        <li><strong>Description:</strong> ${v.inv_description}</li>
+        <li><strong>Engine:</strong> ${v.inv_engine || 'Not specified'}</li>
+        <li><strong>Transmission:</strong> ${v.inv_transmission || 'Not specified'}</li>
       </ul>
 
-      <!-- Call-to-action buttons -->
-      <div class="actions">
-        <button class="btn primary">Start My Purchase</button>
-        <button class="btn outline">Contact Us</button>
-        <button class="btn outline">Schedule Test Drive</button>
-        <button class="btn outline">Apply for Financing</button>
+      <!-- Description -->
+      <div class="description">
+        <h4>Description</h4>
+        <p>${v.inv_description}</p>
+      </div>
+
+      <!-- CTA buttons -->
+      <div class="cta-buttons">
+        <button class="btn btn-primary">Contact Us</button>
+        <button class="btn btn-secondary">Schedule Test Drive</button>
       </div>
     </div>
-  </div>`;
+  </div>
+  `;
 }
 
-async function buildClassificationList(classification_id = null) {
-  const invModel = require('../models/inventoryModel');
-  let data = await invModel.getClassifications();
-  let classificationList =
-    '<select name="classification_id" id="classificationList" required>';
-  classificationList += "<option value=''>Choose a Classification</option>";
+/* ************************
+ * Constructs the nav HTML unordered list
+ ************************** */
+async function getNav(){
+  let data = await classificationModel.getClassifications()
+  let list = "<ul>"
+  list += '<li><a href="/" title="Home page">Home</a></li>'
   data.rows.forEach((row) => {
-    classificationList += '<option value="' + row.classification_id + '"';
-    if (
-      classification_id != null &&
-      row.classification_id == classification_id
-    ) {
-      classificationList += " selected ";
-    }
-    classificationList += ">" + row.classification_name + "</option>";
-  });
-  classificationList += "</select>";
-  return classificationList;
+    list += "<li>"
+    list +=
+      '<a href="/inv/type/' +
+      row.classification_id +
+      '" title="See our inventory of ' +
+      row.classification_name +
+      ' vehicles">' +
+      row.classification_name +
+      "</a>"
+    list += "</li>"
+  })
+  list += "</ul>"
+  return list
 }
 
-// Export the function!
+/* **************************************
+* Build the classification view HTML
+* ************************************ */
+async function buildClassificationGrid(data){
+  let grid
+  if(data.length > 0){
+    grid = '<ul id="inv-display">'
+    data.forEach(vehicle => { 
+      grid += '<li>'
+      grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id 
+      + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
+      + 'details"><img src="' + vehicle.inv_thumbnail 
+      +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
+      +' on CSE Motors" /></a>'
+      grid += '<div class="namePrice">'
+      grid += '<hr />'
+      grid += '<h2>'
+      grid += '<a href="../../inv/detail/' + vehicle.inv_id +'" title="View ' 
+      + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">' 
+      + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>'
+      grid += '</h2>'
+      grid += '<span>$' 
+      + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>'
+      grid += '</div>'
+      grid += '</li>'
+    })
+    grid += '</ul>'
+  } else { 
+    grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
+  }
+  return grid
+}
+
+/* ****************************************
+ * Middleware For Handling Errors
+ * Wrap other function in this for 
+ * General Error Handling
+ **************************************** */
+function handleErrors(fn) {
+  return (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+}
+
+/* ****************************************
+* Middleware to check token validity
+**************************************** */
+function checkJWTToken(req, res, next) {
+  if (req.cookies.jwt) {
+   jwt.verify(
+    req.cookies.jwt,
+    process.env.ACCESS_TOKEN_SECRET,
+    function (err, accountData) {
+     if (err) {
+      req.flash("Please log in")
+      res.clearCookie("jwt")
+      return res.redirect("/account/login")
+     }
+     res.locals.accountData = accountData
+     res.locals.loggedin = 1
+     next()
+    })
+  } else {
+   next()
+  }
+ }
+
+/* ****************************************
+ *  Check Login
+ * ************************************ */
+function checkLogin(req, res, next) {
+  if (res.locals.loggedin) {
+    next()
+  } else {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+ }
+
+/* ****************************************
+ *  Check Account Type for Employee/Admin
+ * ************************************ */
+function checkAccountType(req, res, next) {
+  if (res.locals.loggedin && (res.locals.accountData.account_type == "Employee" || res.locals.accountData.account_type == "Admin")) {
+    next()
+  } else {
+    req.flash("notice", "You do not have permission to access this resource.")
+    return res.redirect("/account/login")
+  }
+}
+
 module.exports = {
   formatNumberWithCommas,
   toUSDollars,
   renderVehicleDetailHTML,
-  buildClassificationList,
-};
+  getNav,
+  buildClassificationGrid,
+  handleErrors,
+  checkJWTToken,
+  checkLogin,
+  checkAccountType
+}
