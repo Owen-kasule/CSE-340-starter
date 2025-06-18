@@ -124,7 +124,13 @@ validate.updateAccountRules = () => {
  * ********************************* */
 validate.updatePasswordRules = () => {
   return [
-    // password is required and must be strong password
+    // current password is required
+    body("current_password")
+      .trim()
+      .notEmpty()
+      .withMessage("Current password is required."),
+
+    // new password is required and must be strong password
     body("account_password")
       .trim()
       .notEmpty()
@@ -135,7 +141,19 @@ validate.updatePasswordRules = () => {
         minNumbers: 1,
         minSymbols: 1,
       })
-      .withMessage("Password does not meet requirements."),
+      .withMessage("New password does not meet requirements."),
+
+    // confirm password
+    body("confirm_password")
+      .trim()
+      .notEmpty()
+      .withMessage("Please confirm your new password.")
+      .custom((value, { req }) => {
+        if (value !== req.body.account_password) {
+          throw new Error("Passwords do not match.");
+        }
+        return true;
+      }),
   ]
 }
 
