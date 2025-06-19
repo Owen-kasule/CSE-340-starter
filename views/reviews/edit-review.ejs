@@ -5,8 +5,8 @@
   res.redirect('/')
 } %>
 
-<% if (messages && messages.notice) { %>
-  <p class="notice"><%= messages.notice %></p>
+<% if (flash.notice) { %>
+  <p class="notice"><%= flash.notice %></p>
 <% } %>
 
 <% if (errors) { %>
