@@ -1,10 +1,8 @@
 <!-- filepath: /home/kasule/Documents/Spring Semester 2025/CSE 340 Web Backend Development/CSE-340-starter/views/reviews/my-reviews.ejs -->
-<% layout('layouts/layout') -%>
-
 <h1><%= title %></h1>
 
-<% if (messages && messages.notice) { %>
-  <p class="notice"><%= messages.notice %></p>
+<% if (flash.notice) { %>
+  <p class="notice"><%= flash.notice %></p>
 <% } %>
 
 <div class="my-reviews-container">

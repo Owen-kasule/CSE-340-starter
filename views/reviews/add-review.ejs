@@ -1,14 +1,12 @@
 <!-- filepath: /home/kasule/Documents/Spring Semester 2025/CSE 340 Web Backend Development/CSE-340-starter/views/reviews/add-review.ejs -->
-<% layout('layouts/layout') -%>
-
 <% if (title) { %>
   <h1><%= title %></h1>
 <% } else { 
   res.redirect('/')
 } %>
 
-<% if (messages && messages.notice) { %>
-  <p class="notice"><%= messages.notice %></p>
+<% if (flash.notice) { %>
+  <p class="notice"><%= flash.notice %></p>
 <% } %>
 
 <% if (errors) { %>
