@@ -96,6 +96,25 @@ app.get('/', (req, res) => {
   res.render('index', { title: 'Home' });
 });
 
+// Temporary setup route - REMOVE AFTER USE
+app.get('/setup-db', async (req, res) => {
+  try {
+    const fs = require('fs');
+    const path = require('path');
+    
+    // Read and execute SQL files
+    const sql1 = fs.readFileSync(path.join(__dirname, 'database/assignment2.sql'), 'utf8');
+    const sql2 = fs.readFileSync(path.join(__dirname, 'database/reviews.sql'), 'utf8');
+    
+    await pool.query(sql1);
+    await pool.query(sql2);
+    
+    res.send('Database setup complete! Remove this route now.');
+  } catch (error) {
+    res.send('Setup failed: ' + error.message);
+  }
+});
+
 // 404 handler
 app.use((req, res, next) => {
   const err = new Error(`Not Found: ${req.originalUrl}`);
