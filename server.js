@@ -14,7 +14,7 @@ const static = require("./routes/static");
 const inventoryRoutes = require('./routes/inventory');
 const miscRouter = require('./routes/misc');
 const accountRoutes = require('./routes/account');
-const reviewRoutes = require('./routes/review'); // Add review routes
+const reviewRoutes = require('./routes/review');
 require('./database/pool');
 const classificationModel = require('./models/classification-model');
 const classificationRouter = require('./routes/classification');
@@ -27,7 +27,7 @@ const utilities = require('./utilities/');
  *************************/
 app.set("view engine", "ejs");
 app.use(expressLayouts);
-app.set("layout", "./layouts/layout");
+app.set("layout", "layouts/layout"); // Remove the "./" prefix
 
 /* ***********************
  * Middleware
